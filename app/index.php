@@ -15,26 +15,34 @@ if (!empty($_GET['post_title']) && !empty($_GET['post_text'])) {
         'text' => htmlspecialchars($_GET['post_text']),
         'author' => htmlspecialchars($_GET['post_title'])
     );
-    $new_post_title = $new_post['title'];
-    $refresh = 1;
-    foreach ($current_posts as $key => $val) {
-        if ($val === $new_post_title) {
-        	$refresh = 0;
-            break;
-        }
-    };
-    if ($refresh === 1){
-		$current_posts[] = $new_post;
-	};
+};
+$new_post_title = '';
+$new_post_title = $new_post['title'];
+
+$refresh = array();
+foreach ($current_posts as $key => $val) {
+    if (in_array($new_post_title,$val)) {
+        $refresh[] = 0;
+    }else {
+        $refresh[] = 1;
+    }
+};
+
+if (!in_array(0,$refresh) && $new_post_title != '') {
+    $current_posts[] = $new_post;
     $json_date = json_encode($current_posts);
     file_put_contents($data_base, $json_date);
 };
+
+
+
 
 $count_posts = count($current_posts);
 ?>
 <pre>
     <?php
     echo count($current_posts);
+
     ?>
 </pre>
 <div class="content">
