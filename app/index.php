@@ -5,6 +5,8 @@ require "header.php";
     login / logout
 --------------------*/
 
+$_SESSION['user'] = "alex";
+
 $user = isset($_GET['user_name']) ? $_GET['user_name'] : null;
 $logout = isset($_GET['logout']) ? $_GET['logout'] : null;
 
@@ -69,6 +71,7 @@ $count_posts = count($current_posts);
     <?php
     //echo count($current_posts);
     echo $current_user;
+    echo $_SESSION['user'];
 
     ?>
 </pre>
